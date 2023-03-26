@@ -9,9 +9,6 @@ import requests
 # Цвета для вывода в консоль
 from colorama import init, Fore
 
-
-# pip install lxml
-
 class URL:
     # Поля protected
     _url_ru = None  # None это NULL (C++)
