@@ -12,6 +12,7 @@ from colorama import init, Fore
 
 # pip install lxml
 print(1)
+print(1)
 class URL:
     # Поля protected
     _url_ru = None  # None это NULL (C++)
