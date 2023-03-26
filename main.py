@@ -127,5 +127,74 @@ if __name__ == '__main__':
     _Parse.Show_Parse()
     end_time = time.time()
     elapsed_time = (end_time - start_time) / 60
-    print(f"\n{Fore.YELLOW}Time: {float(elapsed_time)}")
+    # Сделать класс для Exel таблицы
+    #input = {
+    #     'Код_товара': pandas.Series(Product_code),
+    #     'Название_позиции': pandas.Series(Product_title) + " " + End_title,
+    #     'Название_позиции_укр': pandas.Series(Product_title_ukr) + " " + End_title,
+    #     'Поисковые_запросы': pandas.Series(""),
+    #     'Поисковые_запросы_укр': pandas.Series(""),
+    #     'Описание': pandas.Series(Product_description),
+    #     'Описание_укр': pandas.Series(Product_description_ukr),
+    #     'Тип_товара': pandas.Series(Product_Item_type),
+    #     'Цена': pandas.Series(Product_price),
+    #     'Валюта': pandas.Series(Product_currencyId),
+    #     'Единица_измерения': pandas.Series(Product_Unit_measurement),
+    #     'Минимальный_объем_заказа': pandas.Series(""),
+    #     'Оптовая_цена': pandas.Series(""),
+    #     'Минимальный_заказ_опт': pandas.Series(""),
+    #     'Ссылка_изображения': pandas.Series(Product_pictures),
+    #     'Наличие': pandas.Series(Product_availability),
+    #     'Номер_группы': pandas.Series(""),
+    #     'Название_группы': pandas.Series(""),
+    #     'Адрес_подраздела': pandas.Series(""),
+    #     'Возможность_поставки': pandas.Series(""),
+    #     'Срок_поставки': pandas.Series(""),
+    #     'Способ_упаковки': pandas.Series(""),
+    #     'Способ_упаковки_укр': pandas.Series(""),
+    #     'Уникальный_идентификатор': pandas.Series(Product_IP_item),
+    #     'Идентификатор_товара': pandas.Series(Product_IP_item),
+    #     'Идентификатор_подраздела': pandas.Series(""),
+    #     'Идентификатор_группы': pandas.Series(""),
+    #     'Производитель': pandas.Series(Product_vendor),
+    #     'Страна_производитель': pandas.Series(Product_country_of_origin),
+    #     'Скидка': pandas.Series(""),
+    #     'ID_группы_разновидностей': pandas.Series(""),
+    #     'Личные_заметки': pandas.Series(Product_Note) + " " + Note,
+    #     'Продукт_на_сайте': pandas.Series(""),
+    #     'Cрок действия скидки от': pandas.Series(""),
+    #     'Cрок действия скидки до': pandas.Series(""),
+    #     'Цена от': pandas.Series(""),
+    #     'Ярлык': pandas.Series(""),
+    #     'HTML_заголовок': pandas.Series(""),
+    #     'HTML_заголовок_укр': pandas.Series(""),
+    #     'HTML_описание': pandas.Series(""),
+    #     'HTML_описание_укр': pandas.Series(""),
+    #     'HTML_ключевые_слова': pandas.Series(""),
+    #     'HTML_ключевые_слова_укр': pandas.Series(""),
+    #     'Вес,кг': pandas.Series(""),
+    #     'Ширина,см': pandas.Series(""),
+    #     'Высота,см': pandas.Series(""),
+    #     'Длина,см': pandas.Series(""),
+    #     'Где_находится_товар': pandas.Series(""),
+    #     'Код_маркировки_(GTIN)': pandas.Series(""),
+    #     'Номер_устройства_(MPN)': pandas.Series(""),
+    #     'Название_Характеристики': pandas.Series(""),
+    #     'Измерение_Характеристики': pandas.Series(""),
+    #     'Значение_Характеристики': pandas.Series("")
+    #     }
+    #data_frame_w = pandas.DataFrame(input)
+    #data_frame_w.loc[(data_frame_w.Наличие == "true"), 'Наличие'] = "+"  # Pandas замена всех значений в таблице.
+    #data_frame_w.loc[(data_frame_w.Наличие == "false"), 'Наличие'] = "-"
+    #
+    #exel_file_W = 'data/docs/' + "Test_title" + '.xlsx'
+    #exel_file_R = 'data/docs/' + "Test_crm" + '.xlsx'
+    #file_excep_R = 'data/exceptions.txt'
+    #
+    #data_frame_w.to_excel(exel_file_W, index=False)
+    #data_frame_w = pandas.read_excel(exel_file_W)
+    #data_frame_r = pandas.read_excel(exel_file_R)
+
+    print(f"\n{Fore.RED}Time: {float(elapsed_time)}")
     # как итог паринг данный сейчас занимет 1.6 минуты/сек (нужна оптимизация numpy)
+
