@@ -191,7 +191,8 @@ class Exel(Parse):
         with open(self._Exceptions) as file:
             for line in file:
                 self._Product_except.append(line.replace('\n', ''))
-        print("Product_except = ", self._Product_except)
+    def Show_Exept(self):
+        print(f"\n{Fore.MAGENTA}Product_except = {self._Product_except}")
     def Create_table(self):
         data_frame_w = pandas.DataFrame(self.input)
         data_frame_w.loc[(data_frame_w.Наличие == "true"), 'Наличие'] = "+"  # Pandas замена всех значений в таблице.
@@ -212,6 +213,7 @@ if __name__ == '__main__':
     _Parse = Parse()
     #_Parse.Show_Parse()
     _Exel = Exel()
+    #_Exel.Show_Exept()
     _Exel.Show_File()
     _Exel.Exept()
     _Exel.Create_table()
