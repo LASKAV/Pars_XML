@@ -14,21 +14,21 @@ from functions import push_github_pages
 
 class Arguments:
     _intro = argv
-    _End_title = argv
-    _y = argv
-    _z = argv
-    _n = argv
-    _Note = argv
-    _crm = argv
+    _End_title = "End_title_new"
+    _y = "40"
+    _z = "1.17"
+    _n = "300"
+    _Note = "NOTE"
+    _crm = "2702"
     def __init__(self):
         super().__init__()
         self._intro = argv
-        self._End_title = argv
-        self._y = argv
-        self._z = argv
-        self._n = argv
-        self._Note = argv
-        self._crm = argv
+        self._End_title = "End_title"
+        self._y = "40"
+        self._z = "1.17"
+        self._n = "300"
+        self._Note = "NOTE"
+        self._crm = "2702"
     def Show_Argv(self):
         print("База = ",self._intro)
         print("Название_позиции = ",self._End_title)
@@ -289,5 +289,5 @@ if __name__ == '__main__':
     end_time = time.time()
     elapsed_time = (end_time - start_time) / 60
     print(f"\n{Fore.RED}Time: {float(elapsed_time)}")
-    # как итог паринг данный сейчас занимет 5 минуты/сек
+    # как итог паринг данный сейчас занимет 4.6 минуты/сек
 
