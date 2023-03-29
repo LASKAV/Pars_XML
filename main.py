@@ -9,6 +9,38 @@ import requests
 # Цвета для вывода в консоль
 from colorama import init, Fore
 
+from sys import argv
+from functions import push_github_pages
+
+class Arguments:
+    _intro = argv
+    _End_title = argv
+    _y = argv
+    _z = argv
+    _n = argv
+    _Note = argv
+    _crm = argv
+    def __init__(self):
+        super().__init__()
+        self._intro = argv
+        self._End_title = argv
+        self._y = argv
+        self._z = argv
+        self._n = argv
+        self._Note = argv
+        self._crm = argv
+    def Show_Argv(self):
+        print("База = ",self._intro)
+        print("Название_позиции = ",self._End_title)
+        print("y =  ",self._y)
+        print("z = ",self._z)
+        print("n = ",self._n)
+        print("Личные_заметки = ",self._Note)
+        print("crm_data = ",self._crm)
+    def Push(self):
+        return push_github_pages()
+    def Show_Push(self):
+        print('https://web-shark.github.io/promxls.github.io/'  + str(self._End_title) + '.xlsx')
 class URL:
     # Поля protected
     _url_ru = None  # None это NULL (C++)
@@ -59,6 +91,7 @@ class Product:
     _Pics = []
     _Product_pic_str = []
     def __init__(self):
+        super().__init__()
         self._Product_code = []
         self._Product_title = []
         self._Product_title_ukr = []
@@ -116,14 +149,15 @@ class Parse(Request,Product): # class абстрактный Parse
         print("Product Item Type: ", self._Product_Item_type)
         print("Product Price File: ", self._Product_price_file)
         print("Product Note: ", self._Product_Note)
-class Exel(Parse):
+class Exel(Parse,Arguments):
     def __init__(self):
         super().__init__()
+
         self.input = \
             {
             'Код_товара': pandas.Series(self._Product_code,dtype='object'),
-            'Название_позиции': pandas.Series(self._Product_title,dtype='object'),
-            'Название_позиции_укр': pandas.Series(self._Product_title_ukr,dtype='object'),
+            'Название_позиции': pandas.Series(self._Product_title,dtype='object') + " " + str(self._End_title),
+            'Название_позиции_укр': pandas.Series(self._Product_title_ukr,dtype='object') + " " + str(self._End_title),
             'Поисковые_запросы': pandas.Series(""),
             'Поисковые_запросы_укр': pandas.Series(""),
             'Описание': pandas.Series(self._Product_description,dtype='object'),
@@ -152,7 +186,7 @@ class Exel(Parse):
             'Страна_производитель': pandas.Series(self._Product_country_of_origin,dtype='object'),
             'Скидка': pandas.Series(""),
             'ID_группы_разновидностей': pandas.Series(""),
-            'Личные_заметки': pandas.Series(self._Product_Note,dtype='object'),
+            'Личные_заметки': pandas.Series(self._Product_Note,dtype='object') + " " + str(self._Note),
             'Продукт_на_сайте': pandas.Series(""),
             'Cрок действия скидки от': pandas.Series(""),
             'Cрок действия скидки до': pandas.Series(""),
@@ -175,7 +209,8 @@ class Exel(Parse):
             'Измерение_Характеристики': pandas.Series(""),
             'Значение_Характеристики': pandas.Series("")
             }
-        self._EXEL_pars = 'data/docs/' + "Test_title" + '.xlsx'
+        self._EXEL_pars = 'data/docs/' + str(self._End_title) + '.xlsx'
+        self._EXEL_crm = 'data/docs/' + str(self._crm) + '.xlsx'
         self._Exceptions = "data/exceptions.txt"
         self._Product_except = []
     def Set_EXEL_pars(self,file_name:str):
@@ -200,12 +235,41 @@ class Exel(Parse):
         # Оператор "~" инвертирует булеву маску, т.е. меняет значения True на False и наоборот.
         data_frame_w = data_frame_w[~data_frame_w['Код_товара'].isin(self._Product_except)]
         data_frame_w.to_excel(self._EXEL_pars, index=False)
-
+class Prise(Exel,Arguments):
+    _Praise_new = []
+    def Price_swap_new(self):
+        print(f"\n{Fore.BLUE}Start new praise")
+        data_frame_w = pandas.read_excel(self._EXEL_pars)
+        data_frame_r = pandas.read_excel(self._EXEL_crm)
+        self._Praise_new = numpy.zeros(len(data_frame_w), dtype=int)
+        # создаем массив нулей, чтобы сохранять новые цены
+        for i_iter, (t, row1) in enumerate(data_frame_w.iterrows()):
+            conter_nets = 0
+            finded = False
+            cond = (data_frame_r['ID товара/услуги'] == str(row1['Код_товара'])) & \
+                   (data_frame_r['Себестоимость'] > 0)
+            matches = data_frame_r[cond]
+            if len(matches) > 0:
+                row2 = matches.iloc[0] # берем первое совпадение
+                check_to_price = (int(row2['Себестоимость']) + int(self._y)) * float(self._z) + int(self._n)
+                if (check_to_price - row1['Цена']) > 0:
+                    to_price = check_to_price
+                    finded = True
+            if finded:
+                self._Praise_new[i_iter] = int(to_price)
+            else:
+                self._Praise_new[i_iter] = int((int(row1['Цена']) + int(self._y)) * float(self._z) + int(self._n))
+        data_frame_w['Цена'] = self._Praise_new
+        data_frame_w.to_excel(self._EXEL_pars, index=False)
+        print(f"{Fore.BLUE}End new praise")
 
 if __name__ == '__main__':
     start_time = time.time()
     #_________________________________________# START
     init(autoreset=True)  # поддерживаться вывод на Windows 10.
+    _Arguments = Arguments()
+    _Arguments.Show_Argv()
+    #_Arguments.Push()
     _URL = URL()
     _URL.Show_URL()
     _Requst = Request()
@@ -217,17 +281,13 @@ if __name__ == '__main__':
     _Exel.Show_File()
     _Exel.Exept()
     _Exel.Create_table()
+    _Prise = Prise()
+    _Prise.Price_swap_new()
+    _Arguments.Push()
+    _Arguments.Show_Push()
     #_________________________________________# END
     end_time = time.time()
     elapsed_time = (end_time - start_time) / 60
-
-    #exel_file_R = 'data/docs/' + "Test_crm" + '.xlsx'
-    #file_excep_R = 'data/exceptions.txt'
-
-    #data_frame_w.to_excel(exel_file_W, index=False)
-    #data_frame_w = pandas.read_excel(exel_file_W)
-    #data_frame_r = pandas.read_excel(exel_file_R)
-
     print(f"\n{Fore.RED}Time: {float(elapsed_time)}")
-    # как итог паринг данный сейчас занимет 1.6 минуты/сек (нужна оптимизация numpy)
+    # как итог паринг данный сейчас занимет 5 минуты/сек
 
