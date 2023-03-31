@@ -1,0 +1,41 @@
+from parse__classes.request_class import Request
+from parse__classes.product_class import Product
+class Parse(Request,Product): # class абстрактный Parse
+    def __init__(self):
+        super().__init__()
+        for offer in self._Offers_ukr:
+            self._Product_title_ukr.append(offer.find('name').text)
+            self._Product_description_ukr.append(offer.find('description').text)
+        for offer in self._Offers_ru:
+            self._Product_title.append(offer.find('name').text)
+            self._Product_description.append(offer.find('description').text)
+            self._Pics = offer.find_all('picture')
+            self._Product_pic_str = ", ".join(str(pic.text) for pic in self._Pics)
+            self._Product_pictures.append(self._Product_pic_str)
+            self._Product_price.append(offer.find('price').text)
+            self._Product_availability.append(offer['available'])
+            self._Product_IP_item.append(offer['id'])
+            self._Product_currencyId.append(offer.find('currencyId').text)
+            self._Product_Unit_measurement.append("шт.")
+            self._Product_Item_type.append("r")
+            self._Product_Note.append(" ")
+            self._Product_country_of_origin.append(getattr(offer.find('country_of_origin'), 'text', None))
+            self._Product_vendor.append(getattr(offer.find('vendor'), 'text', None))
+            self._Product_code.append(getattr(offer.find('vendorCode'), 'text', None))
+    def Show_Parse(self):
+        print("Product Code: ", self._Product_code)
+        print("Product Title: ", self._Product_title)
+        print("Product Title (ukr): ", self._Product_title_ukr)
+        print("Product Description: ", self._Product_description)
+        print("Product Description (ukr): ", self._Product_description_ukr)
+        print("Product Pictures: ", self._Product_pictures)
+        print("Product Price: ", self._Product_price)
+        print("Product Availability: ", self._Product_availability)
+        print("Product IP Item: ", self._Product_IP_item)
+        print("Product Currency ID: ", self._Product_currencyId)
+        print("Product Unit Measurement: ", self._Product_Unit_measurement)
+        print("Product Country of Origin: ", self._Product_country_of_origin)
+        print("Product Vendor: ", self._Product_vendor)
+        print("Product Item Type: ", self._Product_Item_type)
+        print("Product Price File: ", self._Product_price_file)
+        print("Product Note: ", self._Product_Note)
